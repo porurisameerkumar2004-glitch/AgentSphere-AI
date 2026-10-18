@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}AgentSphere AI{% endblock %}</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="{% if preferences is defined %}{{ preferences.theme }}{% else %}light{% endif %}">
+{% if session.get('user_id') %}
+
+<header class="app-header">
+    <div>
+        <h1>AgentSphere AI</h1>
+        <p>Multi-Agent Corporation Simulator</p>
+    </div>
+    <span>
+        {% if user is defined and user %}
+            Welcome, {{ user.display_name }}
+        {% endif %}
+    </span>
+</header>
+
+<div class="app-layout">
+    <nav class="sidebar">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('simulations') }}">Simulations &amp; History</a>
+        
+        <a href="{{ url_for('assistant') }}">AI Business Assistant</a>
+
+        <a href="{{ url_for('settings') }}">Settings</a>
+
+        <form method="post" action="{{ url_for('logout') }}">
+            <button class="logout-button" type="submit">Log out</button>
+        </form>
+    </nav>
+
+    <main class="dashboard-main">
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+            <div class="notice {{ category }}">{{ message }}</div>
+        {% endfor %}
+
+        {% block content %}{% endblock %}
+    </main>
+</div>
+
+{% else %}
+
+<main class="auth-page">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="notice {{ category }}">{{ message }}</div>
+    {% endfor %}
+
+    {% block auth_content %}{% endblock %}
+</main>
+
+{% endif %}
+</body>
+</html>

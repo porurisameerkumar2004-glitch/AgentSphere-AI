@@ -1,0 +1,47 @@
+
+{% extends "base.html" %}
+
+{% block title %}Register | AgentSphere AI{% endblock %}
+
+{% block auth_content %}
+<section class="auth-card">
+    <h1>Create account</h1>
+    <p>Start using AgentSphere AI.</p>
+
+    <form method="post">
+        <label for="display_name">Display name</label>
+        <input
+            id="display_name"
+            name="display_name"
+            autocomplete="name"
+            required
+        >
+
+        <label for="email">Email address</label>
+        <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+        >
+
+        <label for="password">Password (at least 8 characters)</label>
+        <input
+            id="password"
+            name="password"
+            type="password"
+            minlength="8"
+            autocomplete="new-password"
+            required
+        >
+
+        <button type="submit">Create account</button>
+    </form>
+
+    <p>
+        Already registered?
+        <a href="{{ url_for('login') }}">Log in</a>
+    </p>
+</section>
+{% endblock %}

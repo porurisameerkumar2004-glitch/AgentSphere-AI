@@ -1,0 +1,119 @@
+
+{% extends "base.html" %}
+
+{% block title %}Simulations | AgentSphere AI{% endblock %}
+
+{% block content %}
+<section class="content-card">
+    <h2>Run a business simulation</h2>
+    <p>Select an event to see how the virtual company responds.</p>
+
+    <form method="post">
+        <label for="event">Business event</label>
+        <select name="event" id="event">
+            {% for key, label in events.items() %}
+            <option value="{{ key }}"
+                {% if selected_event == key %}selected{% endif %}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Run simulation</button>
+    </form>
+</section>
+
+{% if result %}
+<section class="content-card">
+    <h2>Company performance</h2>
+    <p><strong>Scenario:</strong> {{ result.event_label }}</p>
+
+    <div class="dashboard-grid">
+        <article class="dashboard-card">
+            <span>Budget</span>
+            <strong>${{ "{:,.0f}".format(result.company.budget) }}</strong>
+        </article>
+        <article class="dashboard-card">
+            <span>Revenue</span>
+            <strong>${{ "{:,.0f}".format(result.company.revenue) }}</strong>
+        </article>
+        <article class="dashboard-card">
+            <span>Expenses</span>
+            <strong>${{ "{:,.0f}".format(result.company.expenses) }}</strong>
+        </article>
+        <article class="dashboard-card">
+            <span>Profit</span>
+            <strong>${{ "{:,.0f}".format(result.company.profit) }}</strong>
+        </article>
+        <article class="dashboard-card">
+            <span>Productivity</span>
+            <strong>{{ result.company.productivity }}%</strong>
+        </article>
+        <article class="dashboard-card">
+            <span>Customer demand</span>
+            <strong>{{ result.company.demand }}/100</strong>
+        </article>
+    </div>
+</section>
+
+<section class="content-card">
+    <h2>Department agent decisions</h2>
+
+    {% for item in result.recommendations %}
+    <article class="agent-card">
+        <h3>{{ item.agent }} agent</h3>
+        <p><strong>Decision:</strong> {{ item.decision }}</p>
+        <p><strong>Reason:</strong> {{ item.reason }}</p>
+    </article>
+    {% endfor %}
+</section>
+
+<section class="content-card">
+    <h2>CEO final strategy</h2>
+    <h3>{{ result.strategy.decision }}</h3>
+    <p>{{ result.strategy.reason }}</p>
+</section>
+{% endif %}
+
+<section class="content-card">
+  
+<div class="section-heading">
+    <div>
+        <h2>Simulation history</h2>
+        <p>Review and download saved business decisions.</p>
+    </div>
+
+    <a class="primary-link" href="{{ url_for('export_csv') }}">
+        Download CSV
+    </a>
+</div>
+
+
+    {% if history %}
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Scenario</th>
+                    <th>CEO strategy</th>
+                    <th>Date and time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in history %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ events.get(item.event, item.event) }}</td>
+                    <td>{{ item.strategy }}</td>
+                    <td>{{ item.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No simulations yet. Run your first scenario.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,148 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | AgentSphere AI{% endblock %}
+
+{% block content %}
+<section class="welcome-section">
+    <div>
+        <p class="eyebrow">ORGANIZATION OVERVIEW</p>
+        <h2>Welcome back, {{ user.display_name }}!</h2>
+        <p>Here is your virtual company's latest performance.</p>
+    </div>
+
+    <a class="primary-link" href="{{ url_for('simulations') }}">
+        + New simulation
+    </a>
+</section>
+
+<section class="dashboard-grid">
+    <article class="dashboard-card">
+        <div class="metric-top">
+            <span>Total simulations</span>
+            <span class="metric-icon purple">↗</span>
+        </div>
+        <strong>{{ stats.total_simulations }}</strong>
+        <p>Scenarios recorded</p>
+    </article>
+
+    <article class="dashboard-card">
+        <div class="metric-top">
+            <span>Latest revenue</span>
+            <span class="metric-icon blue">$</span>
+        </div>
+        <strong>${{ "{:,.0f}".format(stats.metrics.revenue) }}</strong>
+        <p>From the latest saved simulation</p>
+    </article>
+
+    <article class="dashboard-card">
+        <div class="metric-top">
+            <span>Latest profit</span>
+            <span class="metric-icon green">↗</span>
+        </div>
+        <strong>${{ "{:,.0f}".format(stats.metrics.profit) }}</strong>
+        <p>Revenue minus expenses</p>
+    </article>
+
+    <article class="dashboard-card">
+        <div class="metric-top">
+            <span>Productivity</span>
+            <span class="metric-icon orange">⚙</span>
+        </div>
+        <strong>{{ stats.metrics.productivity }}%</strong>
+        <div class="progress-track">
+            <progress
+                class="progress-fill"
+                max="100"
+                value="{{ stats.metrics.productivity }}"
+            >{{ stats.metrics.productivity }}%</progress>
+        </div>
+    </article>
+</section>
+
+<section class="dashboard-lower">
+    <div class="content-card recent-card">
+        <div class="section-heading">
+            <div>
+                <h3>Recent simulations</h3>
+                <p>Your latest business scenarios</p>
+            </div>
+            <a href="{{ url_for('simulations') }}">View all →</a>
+        </div>
+
+        {% if history %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>CEO decision</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in history %}
+                    <tr>
+                        <td>
+                            <span class="scenario-name">
+                                {{ events.get(item.event, item.event) }}
+                            </span>
+                        </td>
+                        <td>{{ item.strategy }}</td>
+                        <td>{{ item.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">↗</div>
+            <h4>No simulations yet</h4>
+            <p>Run your first scenario to see company performance here.</p>
+            <a class="primary-link" href="{{ url_for('simulations') }}">
+                Run first simulation
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <aside class="content-card quick-actions">
+        <h3>Quick actions</h3>
+        <p>Manage your virtual organization.</p>
+
+        <a class="action-item" href="{{ url_for('simulations') }}">
+            <span class="action-icon blue">▶</span>
+            <span>
+                <strong>Run simulation</strong>
+                <small>Test a business event</small>
+            </span>
+            <span class="action-arrow">→</span>
+        </a>
+
+        <a class="action-item" href="{{ url_for('settings') }}">
+            <span class="action-icon purple">⚙</span>
+            <span>
+                <strong>Settings</strong>
+                <small>Customize your workspace</small>
+            </span>
+            <span class="action-arrow">→</span>
+        </a>
+
+        <div class="team-summary">
+            <h4>Your AI departments</h4>
+            <div class="team-tags">
+                <span>Finance</span>
+                <span>Developer</span>
+                <span>Marketing</span>
+                <span>Sales</span>
+                <span>CEO</span>
+            </div>
+        </div>
+    </aside>
+</section>
+
+<p class="dashboard-footnote">
+    AgentSphere AI · Simulated metrics are for demonstration purposes.
+</p>
+{% endblock %}

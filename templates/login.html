@@ -1,0 +1,112 @@
+
+{% extends "base.html" %}
+
+{% block title %}Login | AgentSphere AI{% endblock %}
+
+{% block auth_content %}
+<section class="login-layout">
+    <div class="login-brand">
+        <div class="brand-icon">A</div>
+        <p class="eyebrow">INTELLIGENT BUSINESS SIMULATION</p>
+        <h1>AgentSphere <span>AI</span></h1>
+        <p class="brand-description">
+            Your virtual company. Your AI team. Smarter business decisions.
+        </p>
+
+        <div class="login-feature">
+            <span>01</span>
+            <div>
+                <strong>Autonomous AI Agents</strong>
+                <p>Simulate Finance, Marketing, Sales, and Development teams.</p>
+            </div>
+        </div>
+
+        <div class="login-feature">
+            <span>02</span>
+            <div>
+                <strong>Real-time Scenarios</strong>
+                <p>Explore how a virtual company responds to business events.</p>
+            </div>
+        </div>
+
+        <div class="login-feature">
+            <span>03</span>
+            <div>
+                <strong>Performance Insights</strong>
+                <p>Review metrics, decisions, and simulation history.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="login-form-panel">
+        <div class="mobile-brand">AgentSphere AI</div>
+
+        <div class="form-heading">
+            <p class="eyebrow">WELCOME BACK</p>
+            <h2>Sign in to your workspace</h2>
+            <p>Enter your account details to continue.</p>
+        </div>
+
+        <form method="post" action="{{ url_for('login') }}">
+            <label for="email">Email address</label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+            >
+
+            <div class="password-label">
+                <label for="password">Password</label>
+            </div>
+
+            <div class="password-wrapper">
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+                <button
+                    class="password-toggle"
+                    type="button"
+                    onclick="togglePassword()"
+                    aria-label="Show or hide password"
+                >Show</button>
+            </div>
+
+            <button class="login-submit" type="submit">
+                Sign in <span aria-hidden="true">→</span>
+            </button>
+        </form>
+
+        <p class="signup-text">
+            New to AgentSphere AI?
+            <a href="{{ url_for('register') }}">Create an account</a>
+        </p>
+
+        <p class="security-note">
+            Your workspace is protected by account authentication.
+        </p>
+    </div>
+</section>
+
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const button = document.querySelector(".password-toggle");
+
+    if (password.type === "password") {
+        password.type = "text";
+        button.textContent = "Hide";
+    } else {
+        password.type = "password";
+        button.textContent = "Show";
+    }
+}
+</script>
+{% endblock %}

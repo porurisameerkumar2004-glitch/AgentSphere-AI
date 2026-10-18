@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+
+{% block title %}Settings | AgentSphere AI{% endblock %}
+
+{% block content %}
+<section class="content-card">
+    <h2>Settings</h2>
+    <p>Update your profile and simulation preferences.</p>
+
+    <form method="post">
+        <label for="display_name">Display name</label>
+        <input
+            id="display_name"
+            name="display_name"
+            value="{{ user.display_name }}"
+            required
+        >
+
+        <label for="theme">Appearance</label>
+        <select id="theme" name="theme">
+            <option value="light"
+                {% if preferences.theme == 'light' %}selected{% endif %}>
+                Light
+            </option>
+            <option value="dark"
+                {% if preferences.theme == 'dark' %}selected{% endif %}>
+                Dark
+            </option>
+        </select>
+
+        <label for="default_event">Default simulation event</label>
+        <select id="default_event" name="default_event">
+            {% for key, label in events.items() %}
+            <option value="{{ key }}"
+                {% if preferences.default_event == key %}selected{% endif %}>
+                {{ label }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Save settings</button>
+    </form>
+</section>
+{% endblock %}

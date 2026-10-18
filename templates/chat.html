@@ -1,0 +1,64 @@
+
+{% extends "base.html" %}
+
+{% block title %}AI Business Assistant | AgentSphere AI{% endblock %}
+
+{% block content %}
+<section class="content-card chat-page">
+    <p class="eyebrow">AGENTSPHERE AI</p>
+    <h2>AI Business Assistant</h2>
+    <p>
+        Ask questions about business strategy, company simulations,
+        and how your department agents make decisions.
+    </p>
+
+    <div class="chat-suggestions">
+        <button type="button"
+            onclick="setQuestion('Explain how a budget cut affects a company.')">
+            Explain a budget cut
+        </button>
+
+        <button type="button"
+            onclick="setQuestion('How can a company respond to a new competitor?')">
+            Respond to competition
+        </button>
+
+        <button type="button"
+            onclick="setQuestion('Explain the roles of the Finance, Sales, Marketing, Developer, and CEO agents.')">
+            Explain the AI agents
+        </button>
+    </div>
+
+    <form method="post" action="{{ url_for('assistant') }}">
+        <label for="question">Your question</label>
+        <textarea
+            id="question"
+            name="question"
+            rows="4"
+            maxlength="2000"
+            placeholder="Ask a business question..."
+            required
+        >{{ question }}</textarea>
+
+        <button type="submit">Ask AI Assistant</button>
+    </form>
+
+    {% if answer %}
+    <section class="assistant-answer">
+        <h3>Assistant response</h3>
+        <div class="answer-text">{{ answer }}</div>
+        <p class="answer-disclaimer">
+            AI-generated guidance may contain errors. Verify important
+            business decisions before acting on them.
+        </p>
+    </section>
+    {% endif %}
+</section>
+
+<script>
+function setQuestion(text) {
+    document.getElementById("question").value = text;
+    document.getElementById("question").focus();
+}
+</script>
+{% endblock %}
