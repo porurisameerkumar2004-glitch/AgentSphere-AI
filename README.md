@@ -68,6 +68,7 @@ CSV	Export format for simulation history
 
 Project Structure
 A typical project structure may look like this. Your actual repository may have additional or differently named files.
+
 AgentSphereAI/
 ├── app.py
 ├── database.py
@@ -87,7 +88,8 @@ AgentSphereAI/
 │   ├── style.css
 │   └── dashboard.css
 └── .gitignore
-- app.py — creates the Flask application and defines routes.
+
+ app.py — creates the Flask application and defines routes.
 - database.py — connects to the database and contains database operations.
 - agents.py — defines the department agents and CEO decision logic.
 - simulation.py — runs business scenarios and calculates simulated outcomes.
