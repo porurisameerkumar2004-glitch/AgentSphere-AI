@@ -86,6 +86,9 @@ CSV	Exporting simulation records
 Project Structure
 A typical project structure may look like this. Your actual repository may have additional or differently named files.
 
+
+
+
 AgentSphereAI/
 ├── app.py
 ├── database.py
@@ -104,6 +107,9 @@ AgentSphereAI/
 │   └── chat.html                 # optional AI assistant
 └── static/
     ├── style.css            # if used
+
+
+
     
 Do not commit your virtual environment (venv/), API keys, passwords, or private database files to GitHub.
 Prerequisites
