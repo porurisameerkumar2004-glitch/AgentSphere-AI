@@ -87,4 +87,5 @@ def run_simulation(event):
         "company": company,
         "recommendations": recommendations,
         "strategy": strategy,
+        "status": "completed",
     }
